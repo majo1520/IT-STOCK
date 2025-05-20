@@ -1,4 +1,4 @@
-# ReactStock - Inventory Management System
+# IT-STOCK - Inventory Management System
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/React-18.x-61DAFB.svg?logo=react&logoColor=white)](https://reactjs.org/)
@@ -37,8 +37,8 @@ ReactStock is a comprehensive inventory management system built with React for t
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/reactstock.git
-cd reactstock
+git clone https://github.com/majo1520/IT-STOCK.git
+cd IT-STOCK
 ```
 
 ### 2. Set up the database
