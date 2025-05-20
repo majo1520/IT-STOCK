@@ -1,0 +1,469 @@
+/* Global Styles with Roboto font and rounded corners */
+
+/* Import Roboto font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Apply Roboto font to the entire application */
+body, h1, h2, h3, h4, h5, h6, p, button, input, select, textarea, .btn, .nav-link {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+/* Rounded corners for common elements */
+.card {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.table {
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.alert {
+  border-radius: 12px !important;
+}
+
+.btn {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Modern gradient buttons with softer colors */
+.btn-primary {
+  background-image: linear-gradient(135deg, #6ea8fe, #4d94ff) !important;
+  border: none !important;
+}
+
+.btn-primary:hover {
+  background-image: linear-gradient(135deg, #5c98ee, #3d84ff) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(78, 155, 255, 0.25) !important;
+}
+
+.btn-success {
+  background-image: linear-gradient(135deg, #75c687, #5eba6c) !important;
+  border: none !important;
+}
+
+.btn-success:hover {
+  background-image: linear-gradient(135deg, #5fb370, #48a359) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(95, 179, 112, 0.25) !important;
+}
+
+.btn-danger {
+  background-image: linear-gradient(135deg, #ea868f, #e56974) !important;
+  border: none !important;
+}
+
+.btn-danger:hover {
+  background-image: linear-gradient(135deg, #dc5a68, #d14553) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(220, 90, 104, 0.25) !important;
+}
+
+.btn-warning {
+  background-image: linear-gradient(135deg, #ffda6a, #ffd042) !important;
+  border: none !important;
+}
+
+.btn-warning:hover {
+  background-image: linear-gradient(135deg, #ffc526, #f5b400) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(255, 197, 38, 0.25) !important;
+}
+
+.btn-secondary {
+  background-image: linear-gradient(135deg, #a7acb1, #909498) !important;
+  border: none !important;
+}
+
+.btn-secondary:hover {
+  background-image: linear-gradient(135deg, #939aa1, #7a8287) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(147, 154, 161, 0.25) !important;
+}
+
+.btn-info {
+  background-image: linear-gradient(135deg, #6edff6, #4bcef0) !important;
+  border: none !important;
+}
+
+.btn-info:hover {
+  background-image: linear-gradient(135deg, #3dcaec, #27b7dd) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(61, 202, 236, 0.25) !important;
+}
+
+/* Outline buttons with hover gradient */
+.btn-outline-primary:hover {
+  background-image: linear-gradient(135deg, #6ea8fe, #4d94ff) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(78, 155, 255, 0.15) !important;
+}
+
+.btn-outline-success:hover {
+  background-image: linear-gradient(135deg, #75c687, #5eba6c) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(95, 179, 112, 0.15) !important;
+}
+
+.btn-outline-danger:hover {
+  background-image: linear-gradient(135deg, #ea868f, #e56974) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(220, 90, 104, 0.15) !important;
+}
+
+.btn-outline-warning:hover {
+  background-image: linear-gradient(135deg, #ffda6a, #ffd042) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(255, 197, 38, 0.15) !important;
+}
+
+.btn-outline-secondary:hover {
+  background-image: linear-gradient(135deg, #a7acb1, #909498) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(147, 154, 161, 0.15) !important;
+}
+
+/* Action buttons with softer gradient */
+.action-button {
+  background-image: linear-gradient(135deg, #ffffff, #f8f9fa) !important;
+  border-radius: 6px !important;
+  border: 1px solid #e9ecef !important;
+  margin-right: 3px !important;
+  transition: all 0.2s ease !important;
+}
+
+.action-button:hover {
+  background-image: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.07) !important;
+}
+
+.action-button.edit:hover {
+  background-image: linear-gradient(135deg, #e6f4ff, #d6ebff) !important;
+  border-color: #c9e2ff !important;
+}
+
+.action-button.delete:hover {
+  background-image: linear-gradient(135deg, #fae9eb, #f8dde0) !important;
+  border-color: #f5d0d5 !important;
+}
+
+.action-button.transfer:hover {
+  background-image: linear-gradient(135deg, #e3f5e9, #d4f0de) !important;
+  border-color: #c6e9d2 !important;
+}
+
+.badge {
+  border-radius: 8px !important;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Style for badges */
+.badge.copy-badge-hover {
+  border-radius: 8px !important;
+  transition: all 0.2s ease;
+}
+
+/* Badge gradient styles with softer colors */
+.badge-primary {
+  background-image: linear-gradient(135deg, #6ea8fe, #4d94ff) !important;
+  border: none !important;
+}
+
+.badge-success {
+  background-image: linear-gradient(135deg, #75c687, #5eba6c) !important;
+  border: none !important;
+}
+
+.badge-danger {
+  background-image: linear-gradient(135deg, #ea868f, #e56974) !important;
+  border: none !important;
+}
+
+.badge-warning {
+  background-image: linear-gradient(135deg, #ffda6a, #ffd042) !important;
+  border: none !important;
+}
+
+.badge-info {
+  background-image: linear-gradient(135deg, #6edff6, #4bcef0) !important;
+  border: none !important;
+}
+
+.badge-secondary {
+  background-image: linear-gradient(135deg, #a7acb1, #909498) !important;
+  border: none !important;
+}
+
+/* Box badge with softer gradient */
+.box-badge {
+  background-image: linear-gradient(135deg, #ffffff, #f8f9fa) !important;
+  transition: all 0.2s ease !important;
+}
+
+.box-badge:hover {
+  background-image: linear-gradient(135deg, #e6f4ff, #d6ebff) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 3px 6px rgba(78, 155, 255, 0.15) !important;
+  color: #4d94ff !important;
+}
+
+/* Location badge with gradient */
+.location-badge {
+  transition: all 0.2s ease !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.location-badge:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Card headers with gradient */
+.card-header {
+  background-image: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Alert styles with softer gradients */
+.alert-success {
+  background-image: linear-gradient(135deg, #e8f6ed, #d4edda) !important;
+  border: 1px solid #c3e6cb !important;
+}
+
+.alert-danger {
+  background-image: linear-gradient(135deg, #f9e7ea, #f8d7da) !important;
+  border: 1px solid #f5c6cb !important;
+}
+
+.alert-warning {
+  background-image: linear-gradient(135deg, #fff9e6, #fff3cd) !important;
+  border: 1px solid #ffeeba !important;
+}
+
+.alert-info {
+  background-image: linear-gradient(135deg, #e6f6f9, #d1ecf1) !important;
+  border: 1px solid #bee5eb !important;
+}
+
+/* Add subtle hover effect to table rows */
+.table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+/* Style action buttons */
+.action-button {
+  margin-right: 3px !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Improve filter panel styling */
+.filter-panel {
+  border-radius: 12px !important;
+  margin-bottom: 20px !important;
+}
+
+/* Rounded input fields */
+.form-control,
+.input-group-text,
+.form-select {
+  border-radius: 8px !important;
+}
+
+/* Active filters styling */
+.active-filters .badge {
+  font-weight: 500 !important;
+  padding: 0.4rem 0.7rem !important;
+}
+
+/* Box styling with rounded corners */
+.box-item {
+  border-radius: 12px !important;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.box-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Dashboard cards */
+.dashboard-card {
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+/* Transactions list */
+.transaction-list .list-group-item {
+  border-radius: 8px !important;
+  margin-bottom: 5px;
+}
+
+/* Button hover effects */
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar improvements */
+.navbar {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Admin panel enhancements */
+.admin-card {
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+}
+
+.admin-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* QR code display */
+.qr-container {
+  border-radius: 12px !important;
+  overflow: hidden;
+  background: white;
+  padding: 15px;
+}
+
+/* Modal styling */
+.modal-content {
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+/* Toast notifications */
+.toast {
+  border-radius: 12px !important;
+}
+
+/* Dropdown menus */
+.dropdown-menu {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
+}
+
+/* Bootstrap 5 background utilities with softer gradients */
+.bg-primary {
+  background-image: linear-gradient(135deg, #6ea8fe, #4d94ff) !important;
+}
+
+.bg-success {
+  background-image: linear-gradient(135deg, #75c687, #5eba6c) !important;
+}
+
+.bg-danger {
+  background-image: linear-gradient(135deg, #ea868f, #e56974) !important;
+}
+
+.bg-warning {
+  background-image: linear-gradient(135deg, #ffda6a, #ffd042) !important;
+}
+
+.bg-info {
+  background-image: linear-gradient(135deg, #6edff6, #4bcef0) !important;
+}
+
+.bg-secondary {
+  background-image: linear-gradient(135deg, #a7acb1, #909498) !important;
+}
+
+.bg-light {
+  background-image: linear-gradient(135deg, #ffffff, #f8f9fa) !important;
+}
+
+.bg-dark {
+  background-image: linear-gradient(135deg, #495057, #343a40) !important;
+}
+
+/* Navbar gradient and improvements */
+.navbar {
+  background-image: linear-gradient(to right, #ffffff, #f8f9fa) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.navbar-dark {
+  background-image: linear-gradient(to right, #495057, #343a40) !important;
+}
+
+.navbar-light {
+  background-image: linear-gradient(to right, #ffffff, #f8f9fa) !important;
+}
+
+/* Enhance the active nav links */
+.nav-link.active {
+  background-image: linear-gradient(135deg, rgba(13, 110, 253, 0.1), rgba(13, 110, 253, 0.2)) !important;
+  border-radius: 4px !important;
+}
+
+/* List group items with subtle gradients on hover */
+.list-group-item:hover {
+  background-image: linear-gradient(135deg, #ffffff, #f8f9fa) !important;
+}
+
+.list-group-item-action:hover {
+  background-image: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+/* Add gradient to pagination */
+.page-item.active .page-link {
+  background-image: linear-gradient(135deg, #0d6efd, #0954c5) !important;
+  border-color: #0d6efd !important;
+}
+
+.page-link:hover {
+  background-image: linear-gradient(135deg, #e9ecef, #dee2e6) !important;
+}
+
+/* Progress bars with softer gradients */
+.progress-bar {
+  background-image: linear-gradient(to right, #6ea8fe, #4d94ff) !important;
+}
+
+.progress-bar-success {
+  background-image: linear-gradient(to right, #75c687, #5eba6c) !important;
+}
+
+.progress-bar-info {
+  background-image: linear-gradient(to right, #6edff6, #4bcef0) !important;
+}
+
+.progress-bar-warning {
+  background-image: linear-gradient(to right, #ffda6a, #ffd042) !important;
+}
+
+.progress-bar-danger {
+  background-image: linear-gradient(to right, #ea868f, #e56974) !important;
+}
+
+/* Enhance modal headers */
+.modal-header {
+  background-image: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.modal-footer {
+  background-image: linear-gradient(135deg, #f8f9fa, #f1f3f5) !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Dark modal variation with softer gradient */
+.modal-header.bg-dark {
+  background-image: linear-gradient(135deg, #495057, #343a40) !important;
+} 

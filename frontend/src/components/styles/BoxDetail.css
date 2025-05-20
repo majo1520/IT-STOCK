@@ -1,0 +1,64 @@
+/* Styles for BoxDetail component */
+
+/* Make table headers sticky */
+.sticky-header thead.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Fix for table scrolling */
+.table-responsive {
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Ensure headers have a background to cover scrolled content */
+.sticky-header thead th {
+  background-color: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Action buttons container */
+.action-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+
+/* Style for action buttons */
+.btn-outline-primary,
+.btn-outline-success,
+.btn-outline-danger,
+.btn-outline-secondary {
+  transition: all 0.2s;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-success:hover,
+.btn-outline-danger:hover,
+.btn-outline-secondary:hover {
+  transform: scale(1.1);
+}
+
+/* Hover effect for items in tables */
+tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.05) !important;
+}
+
+/* Keep action buttons visible on small screens */
+@media (max-width: 767px) {
+  .action-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+  
+  .action-buttons .btn {
+    padding: 0.1rem 0.25rem;
+    font-size: 0.7rem;
+  }
+} 

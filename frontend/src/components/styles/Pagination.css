@@ -1,0 +1,97 @@
+/* Pagination component styles */
+
+/* Basic styling */
+.pagination-container {
+  font-size: 0.9rem;
+}
+
+/* Rounded variant */
+.pagination-rounded .page-link {
+  border-radius: 0.25rem;
+  margin: 0 2px;
+}
+
+/* Pills variant */
+.pagination-pills .page-link {
+  border-radius: 50px;
+  margin: 0 2px;
+  min-width: 32px;
+  text-align: center;
+}
+
+/* Active page styling */
+.pagination .page-item.active .page-link {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+  font-weight: 500;
+}
+
+/* Hover effects */
+.pagination .page-link:hover:not(.disabled) {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+  color: #0d6efd;
+  z-index: 2;
+}
+
+/* Disabled state */
+.pagination .page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+/* Focus styles for accessibility */
+.pagination .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  outline: none;
+  z-index: 3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .pagination .page-link {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .pagination-container {
+    font-size: 0.8rem;
+  }
+}
+
+/* Keyboard navigation indicator */
+.pagination-container:focus-within {
+  position: relative;
+}
+
+.pagination-container:focus-within::after {
+  content: "Use ← → arrows to navigate pages";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: #6c757d;
+  white-space: nowrap;
+  opacity: 0.8;
+  display: none; /* Hidden by default, shown with JS when keyboard is used */
+}
+
+/* Direct page input styling */
+.pagination-container input[type="number"] {
+  text-align: center;
+}
+
+/* Remove spinner buttons from number input */
+.pagination-container input[type="number"]::-webkit-inner-spin-button,
+.pagination-container input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pagination-container input[type="number"] {
+  -moz-appearance: textfield;
+} 

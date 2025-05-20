@@ -1,0 +1,15 @@
+# Dashboard Screenshot Placeholder
+
+Replace this file with a real screenshot of your ReactStock application dashboard.
+
+Suggested filename: dashboard.png
+
+Suggested dimensions: 1200 x 800 pixels
+
+When taking the screenshot, ensure:
+1. You've populated the system with some sample data
+2. The dashboard displays key metrics
+3. No sensitive information is visible
+4. The interface appears professional
+
+After taking the screenshot, delete this text file. 

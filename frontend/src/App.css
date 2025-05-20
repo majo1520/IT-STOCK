@@ -1,0 +1,554 @@
+:root {
+  --primary: #2c3e50;
+  --secondary: #7f8c8d;
+  --accent: #f39c12;
+  --light: #ecf0f1;
+  --dark: #1a1a1a;
+  --danger: #c0392b;
+  --success: #27ae60;
+  --warning: #f1c40f;
+  --info: #3498db;
+  --gray-dark: #343a40;
+  --gray: #6c757d;
+  --gray-light: #f8f9fa;
+  --border-radius: 0;
+  --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+body {
+  font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #f5f5f5;
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* Layout */
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+.container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Header styles - Minimalistic */
+header {
+  background-color: var(--primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* Navigation - Minimalistic */
+.navbar {
+  background-color: var(--gray-dark) !important;
+  padding: 0 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand, .nav-link {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+/* Footer styles - Minimalistic */
+footer {
+  background-color: var(--gray-light);
+  color: var(--gray);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.8rem;
+}
+
+/* Card styles */
+.card {
+  border: none;
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+  box-shadow: var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+.card-header {
+  background-color: var(--gray-dark);
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-footer {
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Box item card */
+.box-item {
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+}
+
+.box-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.box-item .card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+/* Shelf highlight styling */
+.text-primary.fw-bold {
+  position: relative;
+  padding-left: 4px;
+  border-left: 3px solid var(--info);
+}
+
+/* Item preview in box card */
+.item-preview {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.item-tag {
+  background-color: var(--gray-light);
+  padding: 0.1rem 0.5rem;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  display: inline-block;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Status badges */
+.status-badge {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Active filters styling */
+.active-filters .card-header strong {
+  color: #000;
+  font-weight: 600;
+}
+
+.filter-badges .badge {
+  color: #000 !important;
+  font-weight: 500;
+}
+
+.filter-badges .badge .btn {
+  color: #000 !important;
+}
+
+/* Enhanced table styling */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table thead th {
+  font-weight: 600;
+  color: #333;
+  background-color: #f8f9fa;
+  border-top: none;
+  padding: 0.75rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.table tbody td {
+  padding: 0.75rem;
+  vertical-align: middle;
+}
+
+/* Item filter panel styling */
+.filter-panel {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.filter-panel .form-label {
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: #495057;
+}
+
+/* Item action buttons */
+.action-button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  margin-right: 4px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #495057;
+}
+
+.action-button:hover {
+  background-color: #e9ecef;
+  color: #212529;
+}
+
+.action-button.edit:hover {
+  background-color: #cce5ff;
+  border-color: #b8daff;
+  color: #0d6efd;
+}
+
+.action-button.delete:hover {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #dc3545;
+}
+
+.action-button.transfer:hover {
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+  color: #198754;
+}
+
+/* Badge styling */
+.badge.location-badge {
+  font-size: 0.7rem;
+  padding: 0.35em 0.65em;
+  font-weight: 500;
+}
+
+.badge.box-badge {
+  background-color: #e9ecef;
+  color: #495057;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid #ced4da;
+}
+
+/* Relationship badge styling */
+.relationship-badge {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Search field enhancements */
+.search-container .form-control {
+  border-right: none;
+}
+
+.search-container .btn {
+  border-color: #ced4da;
+  background-color: #fff;
+}
+
+.search-container .btn:hover {
+  background-color: #f8f9fa;
+}
+
+/* Transaction list */
+.transaction-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.list-group-item {
+  padding: 0.75rem 1rem;
+  border-left: 3px solid transparent;
+}
+
+.list-group-item:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.list-group-item.transaction-create {
+  border-left-color: var(--success);
+}
+
+.list-group-item.transaction-update {
+  border-left-color: var(--info);
+}
+
+.list-group-item.transaction-delete {
+  border-left-color: var(--danger);
+}
+
+.list-group-item.transaction-permanent_delete {
+  border-left-color: var(--danger);
+  background-color: rgba(220, 53, 69, 0.08);
+}
+
+.list-group-item.transaction-soft_delete {
+  border-left-color: var(--warning);
+  background-color: rgba(255, 193, 7, 0.08);
+}
+
+.list-group-item.transaction-add_item {
+  border-left-color: var(--primary);
+}
+
+.list-group-item.transaction-remove_item {
+  border-left-color: var(--warning);
+}
+
+.list-group-item.transaction-transfer_in {
+  border-left-color: var(--success);
+}
+
+.list-group-item.transaction-transfer_out {
+  border-left-color: var(--warning);
+}
+
+/* Form styles */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-control, .form-select {
+  border-radius: var(--border-radius);
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--gray-dark);
+  font-size: 0.9rem;
+}
+
+.input-group-text {
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius);
+  padding: 0.6rem 0.8rem;
+}
+
+/* Buttons */
+.btn {
+  border-radius: var(--border-radius);
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: #1a2530;
+  border-color: #1a2530;
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-info {
+  background-color: var(--info);
+  border-color: var(--info);
+  color: white;
+}
+
+.btn-warning {
+  background-color: var(--warning);
+  border-color: var(--warning);
+}
+
+.btn-sm {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 0.9rem;
+  }
+  
+  .navbar-brand, .nav-link {
+    font-size: 0.75rem;
+  }
+}
+
+/* Dashboard styles */
+.location-group .list-group-item-action {
+  transition: all 0.1s ease;
+}
+
+.location-group .list-group-item-action:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  z-index: 1;
+}
+
+/* Make scrollable sections for long lists */
+.dashboard-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Enhance badges */
+.badge {
+  font-weight: 500;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+} 
+
+/* Print Labels Component */
+@media screen {
+  .print-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 20px;
+  }
+  
+  .label-container {
+    border: 1px dashed #ccc;
+    box-sizing: border-box;
+    display: flex;
+    margin-bottom: 5px;
+  }
+  
+  .compact-label {
+    flex-direction: row;
+    align-items: center;
+    width: 54mm;
+    height: 17mm;
+    padding: 1mm;
+  }
+  
+  .small-label {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30mm;
+    height: 20mm;
+    padding: 1mm;
+  }
+  
+  .standard-label {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90mm;
+    height: 50mm;
+    padding: 5mm;
+  }
+  
+  .compact-label .label-content {
+    margin-left: 2mm;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .compact-label .item-name {
+    font-size: 12px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 3px;
+  }
+  
+  .compact-label .item-code {
+    font-size: 9px;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .small-label .item-name {
+    font-size: 8px;
+    font-weight: bold;
+    margin-top: 1mm;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 28mm;
+  }
+  
+  .small-label .item-code {
+    display: none;
+  }
+  
+  .standard-label .item-name {
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 3mm;
+    text-align: center;
+  }
+  
+  .standard-label .item-code {
+    font-size: 10px;
+    color: #666;
+    margin-top: 1mm;
+    text-align: center;
+    word-break: break-all;
+    max-width: 80mm;
+  }
+} 
