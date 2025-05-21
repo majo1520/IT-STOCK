@@ -7,7 +7,13 @@
 
 ReactStock is a comprehensive inventory management system built with React for the frontend and Node.js for the backend. It provides tools for tracking inventory items, generating QR code labels, and managing stock efficiently.
 
-![ReactStock Screenshot](docs/images/dashboard.png)
+## Screenshots
+
+### Dashboard
+![IT Stock Dashboard](docs/images/ITSTOCK.png)
+
+### Items Management
+![IT Stock Items Management](docs/images/ITSTOCK-ITEMS.png)
 
 ## Features
 
