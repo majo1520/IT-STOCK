@@ -5,6 +5,7 @@ import BarcodeScannerModal from './BarcodeScannerModal';
 import webSocketService from '../services/webSocketService';
 import { QRCodeSVG } from 'qrcode.react'; // Import QRCodeSVG component
 import { generateUniqueQRValue, isValidQRFormat } from '../utils/qrCodeGenerator'; // Import QR code generator
+import codeSyncService from '../services/codeSync'; // Import code sync service
 
 function StockInModal({ 
   show, 
@@ -123,6 +124,19 @@ function StockInModal({
     console.log('Generating new QR code');
     const newCode = generateUniqueQRValue(itemType === 'existing' ? selectedItemId : null);
     setGeneratedReferenceCode(newCode);
+    
+    // If we're working with an existing item, save the new code to both localStorage and database
+    if (itemType === 'existing' && selectedItemId) {
+      console.log('Syncing new QR code to database for item:', selectedItemId);
+      codeSyncService.storeItemCode(selectedItemId, newCode, newCode)
+        .then(() => {
+          console.log('New QR code successfully synced to database');
+        })
+        .catch(err => {
+          console.error('Failed to sync new QR code to database:', err);
+        });
+    }
+    
     return newCode;
   };
   
@@ -947,14 +961,14 @@ function StockInModal({
     <div className="modal d-block" tabIndex="-1" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
       <div className="modal-dialog modal-lg">
         <div className="modal-content">
-          <div className="modal-header bg-success text-white">
-            <h5 className="modal-title">
+          <div className="modal-header bg-success">
+            <h5 className="modal-title text-dark">
               <i className="bi bi-box-arrow-in-down me-2"></i>
               Stock In - Add Items
             </h5>
             <button 
               type="button" 
-              className="btn-close btn-close-white" 
+              className="btn-close" 
               onClick={safeClose}
               disabled={submitting}
               aria-label="Close"
@@ -1226,7 +1240,21 @@ function StockInModal({
                               onClick={() => {
                                 setEanCode(generatedReferenceCode);
                                 setActiveTab('details');
-                                alert('Reference code applied to EAN field');
+                                
+                                // If we're working with an existing item, sync the code to database
+                                if (itemType === 'existing' && selectedItemId) {
+                                  codeSyncService.storeItemCode(selectedItemId, generatedReferenceCode, generatedReferenceCode)
+                                    .then(() => {
+                                      console.log('EAN/QR code saved to database');
+                                      alert('Reference code applied to EAN field and saved to database');
+                                    })
+                                    .catch(err => {
+                                      console.error('Failed to save EAN/QR code to database:', err);
+                                      alert('Reference code applied to EAN field (but database update failed)');
+                                    });
+                                } else {
+                                  alert('Reference code applied to EAN field');
+                                }
                               }}
                             >
                               <i className="bi bi-check-circle me-1"></i>

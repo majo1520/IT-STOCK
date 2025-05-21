@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="32" cy="32" r="30" fill="#0078d7"/>
+  
+  <!-- White Background for Text -->
+  <circle cx="32" cy="32" r="20" fill="white"/>
+  
+  <!-- "S" -->
+  <path d="M23 38C23 35 24.5 33.5 27 32C29.5 30.5 31 29.5 31 28C31 26.5 29.5 25.5 27.5 25.5C25.5 25.5 24 26.5 23 28L18 24.5C20 21.5 23.5 20 27.5 20C33 20 37 23 37 28C37 31.5 34.5 33.5 31.5 35C28.5 36.5 27 37.5 27 38H37V44H23V38Z" fill="#0078d7"/>
+  
+  <!-- "T" -->
+  <path d="M38 20H53V26H48.5V44H42.5V26H38V20Z" fill="#0078d7"/>
+</svg> 

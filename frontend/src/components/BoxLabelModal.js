@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import BoxLabel from './BoxLabel';
 import { saveBoxLabelAsPDF } from '../utils/LabelPrinter';
 import { QRCodeSVG } from 'qrcode.react';
+import config from '../config/appConfig';
 
 function BoxLabelModal({ show, handleClose, box, generateReference = false }) {
   const labelRef = useRef(null);
@@ -177,8 +178,8 @@ function BoxLabelModal({ show, handleClose, box, generateReference = false }) {
     // If textId doesn't have the BOX- prefix, use the formatted version, otherwise use as-is
     const refFormatted = textId.startsWith('BOX-') ? textId : `BOX-${box.box_number.toString().padStart(4, '0')}-${refCode}`;
     
-    // Generate QR code URL with box ID and reference_id for proper linking
-    const qrCodeUrl = `http://192.168.155.207:5173/boxes/${box.id}?ref=${textId}`;
+    // Generate QR code URL for box details - use the application base URL from config
+    const qrCodeUrl = `${config.appBaseUrl}/boxes/${box.id}?ref=${textId}`;
     
     // Get current date for the label
     const currentDate = new Date().toLocaleDateString('en-US', {

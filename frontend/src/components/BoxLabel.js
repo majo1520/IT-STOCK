@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { generateBoxReference } from '../utils/codeUtils';
 import { QRCodeSVG } from 'qrcode.react';
+import config from '../config/appConfig';
 
 const BoxLabel = React.forwardRef(({ box, generateReference = false, onRender = null }, ref) => {
   // Generate a unique text ID based on box details
@@ -29,8 +30,8 @@ const BoxLabel = React.forwardRef(({ box, generateReference = false, onRender = 
   const labelWidthMm = 62;
   const labelHeightMm = 85;
   
-  // Generate QR code URL for box details - use the full reference_id for consistency
-  const qrCodeUrl = `http://192.168.155.207:5173/boxes/${box.id}?ref=${textId}`;
+  // Generate QR code URL for box details - use the application base URL from config
+  const qrCodeUrl = `${config.appBaseUrl}/boxes/${box.id}?ref=${textId}`;
   
   // Get current date for the label
   const currentDate = new Date().toLocaleDateString('en-US', {

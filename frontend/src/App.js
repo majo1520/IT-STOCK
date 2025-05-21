@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import BoxList from './components/BoxList';
 import BoxDetail from './components/BoxDetail';
@@ -32,6 +32,14 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
+import codeSyncService from './services/codeSync';
+import webSocketService from './services/webSocketService';
+import initializeServices from './services/initService';
+import Dropdown from 'react-bootstrap/Dropdown';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 function AppContent() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -48,46 +56,8 @@ function AppContent() {
   const location = useLocation();
   const { currentUser, logout, setCurrentUser } = useAuth();
 
-  // Initialize Bootstrap components
-  useEffect(() => {
-    // Make sure Bootstrap components are properly initialized
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      // Initialize all dropdowns
-      const dropdownElementList = document.querySelectorAll('.dropdown-toggle');
-      if (window.bootstrap && window.bootstrap.Dropdown) {
-        dropdownElementList.forEach(dropdownToggleEl => {
-          try {
-            new window.bootstrap.Dropdown(dropdownToggleEl);
-          } catch (error) {
-            console.error('Error initializing dropdown:', error);
-          }
-        });
-      } else {
-        console.warn('Bootstrap Dropdown component not available');
-      }
-      
-      // Add a global click event handler to close dropdowns
-      document.addEventListener('click', (event) => {
-        // Check if the click was outside any dropdown
-        if (!event.target.closest('.dropdown-menu') && !event.target.classList.contains('dropdown-toggle')) {
-          // Get all open dropdowns
-          const openDropdowns = document.querySelectorAll('.dropdown-menu.show');
-          
-          // Close each dropdown that's open
-          openDropdowns.forEach(dropdown => {
-            const dropdownToggle = document.querySelector(`[data-bs-toggle="dropdown"][aria-expanded="true"]`);
-            if (dropdownToggle && window.bootstrap && window.bootstrap.Dropdown) {
-              const dropdownInstance = window.bootstrap.Dropdown.getInstance(dropdownToggle);
-              if (dropdownInstance) {
-                dropdownInstance.hide();
-              }
-            }
-          });
-        }
-      });
-    }
-  }, [currentUser]); // Re-run when user changes
-
+  // Initialize Bootstrap is no longer needed as we're using React-Bootstrap components
+  
   // Check for auto re-authentication on component mount
   useEffect(() => {
     const checkForReauth = async () => {
@@ -240,16 +210,55 @@ function AppContent() {
     };
   }, []);
 
-  // Helper function to close management dropdown
-  const closeManagementDropdown = () => {
-    const dropdown = document.getElementById('managementDropdown');
-    if (dropdown && window.bootstrap && window.bootstrap.Dropdown) {
-      const dropdownInstance = window.bootstrap.Dropdown.getInstance(dropdown);
-      if (dropdownInstance) {
-        dropdownInstance.hide();
+  useEffect(() => {
+    // existing initialization code...
+
+    // Synchronize EAN/QR codes between localStorage and database
+    const syncItemCodes = async () => {
+      try {
+        // Only sync if user is logged in (to avoid authentication errors)
+        const token = localStorage.getItem('token');
+        if (token) {
+          console.log('Starting code synchronization process...');
+          const syncedItems = await codeSyncService.syncAllItemCodes();
+          console.log(`Successfully synchronized ${syncedItems.length} items with the database`);
+        }
+      } catch (err) {
+        console.error('Error during code synchronization:', err);
       }
+    };
+    
+    // Call the sync function with a slight delay to ensure other initialization completes first
+    setTimeout(syncItemCodes, 3000);
+    
+    // Add WebSocket listener for database changes that might require re-syncing
+    const handleWebSocketMessage = (message) => {
+      if (message.type === 'database_update' || message.type === 'cache_invalidation') {
+        // Re-sync codes when database changes are detected
+        syncItemCodes();
+      }
+    };
+    
+    // Use the subscribe method instead of addMessageListener
+    let unsubscribe;
+    if (webSocketService) {
+      // Subscribe to 'all' events and filter in the callback
+      unsubscribe = webSocketService.subscribe('all', handleWebSocketMessage);
+      
+      // Cleanup listener on component unmount
+      return () => {
+        if (unsubscribe) unsubscribe();
+      };
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // Initialize all application services (including code synchronization)
+    const cleanup = initializeServices();
+    
+    // Return cleanup function to be called when component unmounts
+    return cleanup;
+  }, []);
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -323,66 +332,32 @@ function AppContent() {
               )}
               
               {currentUser ? (
-                <div className="dropdown">
-                  <button 
-                    className="btn btn-dark btn-sm dropdown-toggle d-flex align-items-center" 
-                    type="button" 
-                    id="userMenuButton" 
-                    data-bs-toggle="dropdown" 
-                    aria-expanded="false"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      // Try to manually toggle dropdown if Bootstrap JS isn't working
-                      if (window.bootstrap && window.bootstrap.Dropdown) {
-                        try {
-                          const dropdown = window.bootstrap.Dropdown.getInstance(e.currentTarget);
-                          if (dropdown) {
-                            dropdown.toggle();
-                          } else {
-                            new window.bootstrap.Dropdown(e.currentTarget).toggle();
-                          }
-                        } catch (err) {
-                          console.error('Error toggling dropdown:', err);
-                        }
-                      } else {
-                        // Fallback - toggle manually
-                        const dropdownMenu = document.querySelector('ul[aria-labelledby="userMenuButton"]');
-                        if (dropdownMenu) {
-                          dropdownMenu.classList.toggle('show');
-                          e.currentTarget.setAttribute('aria-expanded', 
-                            e.currentTarget.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
-                          );
-                        }
-                      }
-                    }}
+                <Dropdown>
+                  <Dropdown.Toggle 
+                    variant="dark" 
+                    size="sm"
+                    id="userMenuButton"
+                    className="d-flex align-items-center"
                   >
                     <i className="bi bi-person-circle me-1"></i>
                     <span className="d-none d-md-inline">{currentUser.username}</span>
-                  </button>
-                  <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="userMenuButton">
-                    <li><span className="dropdown-item-text small text-muted">Signed in as <strong>{currentUser.username}</strong></span></li>
-                    <li><hr className="dropdown-divider" /></li>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu variant="dark" align="end">
+                    <Dropdown.ItemText className="small text-muted">Signed in as <strong>{currentUser.username}</strong></Dropdown.ItemText>
+                    <Dropdown.Divider />
                     <li className="px-3 py-1">
                       <OfflineModeToggle />
                     </li>
-                    <li><hr className="dropdown-divider" /></li>
-                    <li>
-                      <button 
-                        className="dropdown-item small" 
-                        onClick={(e) => {
-                          // Close dropdown before logging out
-                          document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                            menu.classList.remove('show');
-                          });
-                          logout();
-                        }}
-                      >
-                        <i className="bi bi-box-arrow-right me-1"></i>
-                        LOGOUT
-                      </button>
-                    </li>
-                  </ul>
-                </div>
+                    <Dropdown.Divider />
+                    <Dropdown.Item 
+                      className="small"
+                      onClick={logout}
+                    >
+                      <i className="bi bi-box-arrow-right me-1"></i>
+                      LOGOUT
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               ) : (
                 <div>
                   <Link to="/login" className="btn btn-sm btn-outline-light me-2">Login</Link>
@@ -396,172 +371,106 @@ function AppContent() {
 
       {/* Main navigation bar */}
       {currentUser && (
-        <nav className="navbar navbar-dark navbar-expand-lg py-1 sticky-top">
-          <div className="container-fluid px-3">
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link className="nav-link py-1 small" to="/">
+        <Navbar bg="dark" variant="dark" expand="lg" className="py-1 sticky-top">
+          <Container fluid className="px-3">
+            <Navbar.Toggle aria-controls="navbarNav" />
+            <Navbar.Collapse id="navbarNav">
+              <Nav className="me-auto">
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/" className="py-1 small">
                     <i className="bi bi-clipboard-check me-1"></i>INVENTORY
-                  </Link>
-                </li>
+                  </Nav.Link>
+                </Nav.Item>
                 
                 {/* Direct links */}
-                <li className="nav-item">
-                  <Link className="nav-link py-1 small" to="/boxes">
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/boxes" className="py-1 small">
                     <i className="bi bi-box me-1"></i>BOXES
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link py-1 small" to="/items">
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/items" className="py-1 small">
                     <i className="bi bi-list-ul me-1"></i>ITEMS
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link py-1 small" to="/transactions">
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/transactions" className="py-1 small">
                     <i className="bi bi-clock-history me-1"></i>TRANSACTIONS
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link py-1 small" to="/stock">
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/stock" className="py-1 small">
                     <i className="bi bi-box-seam me-1"></i>STOCK MANAGEMENT
-                  </Link>
-                </li>
+                  </Nav.Link>
+                </Nav.Item>
                 
                 {/* Management dropdown, admin only */}
                 {currentUser.role === 'admin' && (
-                  <li className="nav-item dropdown">
-                    <a 
-                      className="nav-link py-1 small dropdown-toggle" 
-                      href="#" 
-                      id="managementDropdown" 
-                      role="button" 
-                      data-bs-toggle="dropdown" 
-                      aria-expanded="false"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        // Try to manually toggle dropdown if Bootstrap JS isn't working
-                        if (window.bootstrap && window.bootstrap.Dropdown) {
-                          try {
-                            const dropdown = window.bootstrap.Dropdown.getInstance(e.currentTarget);
-                            if (dropdown) {
-                              dropdown.toggle();
-                            } else {
-                              new window.bootstrap.Dropdown(e.currentTarget).toggle();
-                            }
-                          } catch (err) {
-                            console.error('Error toggling dropdown:', err);
-                          }
-                        } else {
-                          // Fallback - toggle manually
-                          const dropdownMenu = document.querySelector('ul[aria-labelledby="managementDropdown"]');
-                          if (dropdownMenu) {
-                            dropdownMenu.classList.toggle('show');
-                            e.currentTarget.setAttribute('aria-expanded', 
-                              e.currentTarget.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
-                            );
-                          }
-                        }
-                      }}
-                    >
+                  <Dropdown as={Nav.Item}>
+                    <Dropdown.Toggle as={Nav.Link} id="managementDropdown" className="py-1 small">
                       <i className="bi bi-gear me-1"></i>MANAGEMENT
-                    </a>
-                    <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="managementDropdown">
-                      <li>
-                        <Link 
-                          className="dropdown-item small" 
-                          to="/customers"
-                          onClick={() => {
-                            // Directly hide all dropdowns by removing show class
-                            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                              menu.classList.remove('show');
-                            });
-                            // Reset aria-expanded attributes
-                            document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(toggle => {
-                              toggle.setAttribute('aria-expanded', 'false');
-                            });
-                          }}
-                        >
-                          <i className="bi bi-people me-1"></i>CUSTOMERS
-                        </Link>
-                      </li>
-                      <li>
-                        <Link 
-                          className="dropdown-item small" 
-                          to="/groups"
-                          onClick={() => {
-                            // Directly hide all dropdowns by removing show class
-                            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                              menu.classList.remove('show');
-                            });
-                            // Reset aria-expanded attributes
-                            document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(toggle => {
-                              toggle.setAttribute('aria-expanded', 'false');
-                            });
-                          }}
-                        >
-                          <i className="bi bi-diagram-3 me-1"></i>GROUPS
-                        </Link>
-                      </li>
-                      <li>
-                        <Link 
-                          className="dropdown-item small" 
-                          to="/roles"
-                          onClick={() => {
-                            // Directly hide all dropdowns by removing show class
-                            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                              menu.classList.remove('show');
-                            });
-                            // Reset aria-expanded attributes
-                            document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(toggle => {
-                              toggle.setAttribute('aria-expanded', 'false');
-                            });
-                          }}
-                        >
-                          <i className="bi bi-person-badge me-1"></i>ROLES
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu variant="dark">
+                      <Dropdown.Item 
+                        as={Link} 
+                        to="/customers"
+                        className="small"
+                      >
+                        <i className="bi bi-people me-1"></i>CUSTOMERS
+                      </Dropdown.Item>
+                      <Dropdown.Item 
+                        as={Link} 
+                        to="/groups"
+                        className="small"
+                      >
+                        <i className="bi bi-diagram-3 me-1"></i>GROUPS
+                      </Dropdown.Item>
+                      <Dropdown.Item 
+                        as={Link} 
+                        to="/roles"
+                        className="small"
+                      >
+                        <i className="bi bi-person-badge me-1"></i>ROLES
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 )}
                 
                 {/* Admin link, admin only */}
                 {currentUser.role === 'admin' && (
-                  <li className="nav-item">
-                    <Link className="nav-link py-1 small" to="/admin">
+                  <Nav.Item>
+                    <Nav.Link as={Link} to="/admin" className="py-1 small">
                       <i className="bi bi-shield-lock me-1"></i>ADMIN
-                    </Link>
-                  </li>
+                    </Nav.Link>
+                  </Nav.Item>
                 )}
-              </ul>
+              </Nav>
               
               {/* Spacer to push user menu to the right */}
-              <div className="navbar-nav ms-auto">
-                <div className="btn-group" role="group">
-                  <button 
-                    type="button" 
-                    className="btn btn-success btn-sm me-2"
+              <div className="ms-auto">
+                <ButtonGroup>
+                  <Button 
+                    variant="success" 
+                    size="sm"
+                    className="me-2"
                     onClick={() => setShowStockInModal(true)}
                   >
                     <i className="bi bi-box-arrow-in-down me-1"></i>
                     STOCK IN
-                  </button>
-                  <button 
-                    type="button" 
-                    className="btn btn-danger btn-sm"
+                  </Button>
+                  <Button 
+                    variant="danger" 
+                    size="sm"
                     onClick={() => setShowStockOutModal(true)}
                   >
                     <i className="bi bi-box-arrow-up-right me-1"></i>
                     STOCK OUT
-                  </button>
-                </div>
+                  </Button>
+                </ButtonGroup>
               </div>
-            </div>
-          </div>
-        </nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
       )}
 
       {/* Main Content */}

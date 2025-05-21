@@ -351,7 +351,7 @@ function BoxDetail() {
             >
               <div className="card-body p-2">
                 <div className="d-flex justify-content-between">
-                  <h6 className="card-title mb-1 text-truncate" style={{maxWidth: '80%'}}>{item.name}</h6>
+                  <h6 className="card-title mb-1 text-truncate text-dark" style={{maxWidth: '80%'}}>{item.name}</h6>
                   <div className="item-actions">
                     <div className="dropdown d-inline">
                       <button 
@@ -407,7 +407,7 @@ function BoxDetail() {
                     </div>
                   </div>
                 </div>
-                <div className="card-text small mb-1">
+                <div className="card-text small mb-1 text-dark">
                   {item.description || <span className="text-muted">No description</span>}
                 </div>
                 <div className="d-flex justify-content-between align-items-center mb-1">
@@ -480,13 +480,13 @@ function BoxDetail() {
         <table className="table table-sm table-hover mb-0 sticky-header">
           <thead className="bg-light sticky-top">
             <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Type</th>
-              <th>Quantity</th>
-              <th>Serial</th>
-              <th>Relationships</th>
-              <th className="text-end">Actions</th>
+              <th className="text-dark">Name</th>
+              <th className="text-dark">Description</th>
+              <th className="text-dark">Type</th>
+              <th className="text-dark">Quantity</th>
+              <th className="text-dark">Serial</th>
+              <th className="text-dark">Relationships</th>
+              <th className="text-end text-dark">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -498,11 +498,11 @@ function BoxDetail() {
                   background: itemHover === item.id ? 'rgba(0,123,255,0.05)' : 'transparent'
                 }}
               >
-                <td className="fw-bold">{item.name}</td>
-                <td>{item.description || '-'}</td>
-                <td>{item.type || '-'}</td>
-                <td>{item.quantity || 1}</td>
-                <td className="text-monospace small">{item.reference_id || '-'}</td>
+                <td className="fw-bold text-dark">{item.name}</td>
+                <td className="text-dark">{item.description || '-'}</td>
+                <td className="text-dark">{item.type || '-'}</td>
+                <td className="text-dark">{item.quantity || 1}</td>
+                <td className="text-monospace small text-dark">{item.reference_id || '-'}</td>
                 <td>
                   <ItemRelationship item={item} items={items} />
                 </td>
@@ -1015,7 +1015,7 @@ function BoxDetail() {
 
       <div className="d-flex justify-content-between align-items-center mb-2">
         <div className="d-flex align-items-center">
-          <small className="text-muted me-2">ITEMS IN THIS BOX</small>
+          <small className="text-dark fw-bold me-2">ITEMS IN THIS BOX</small>
           <small className="badge bg-secondary">{items.length || 0}</small>
         </div>
         

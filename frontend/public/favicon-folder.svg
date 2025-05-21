@@ -1,0 +1,17 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="32" cy="32" r="30" fill="#0078d7"/>
+  
+  <!-- Folder Base - Enlarged -->
+  <path d="M12 16C12 14.8954 12.8954 14 14 14H26L32 20H50C51.1046 20 52 20.8954 52 22V48C52 49.1046 51.1046 50 50 50H14C12.8954 50 12 49.1046 12 48V16Z" fill="white"/>
+  
+  <!-- Folder Inner Shading -->
+  <path d="M12 22H52V48C52 49.1046 51.1046 50 50 50H14C12.8954 50 12 49.1046 12 48V22Z" fill="#F0F0F0"/>
+  
+  <!-- Plus Sign - Enlarged -->
+  <rect x="31" y="25" width="2" height="20" rx="1" fill="#0078d7"/>
+  <rect x="22" y="34" width="20" height="2" rx="1" fill="#0078d7"/>
+  
+  <!-- IT Text - Larger -->
+  <text x="20" y="42" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0078d7">IT</text>
+</svg> 

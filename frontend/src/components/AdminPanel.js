@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import RemovalReasonManagement from './RemovalReasonManagement';
-import MigrationTools from './admin/MigrationTools';
+import DatabaseTools from './admin/DatabaseTools';
 import DeletedItemsManager from './DeletedItemsManager';
 import UserManagement from './admin/UserManagement';
 import DeviceHealth from './admin/DeviceHealth';
 
 function AdminPanel() {
   const [key, setKey] = useState('users');
-
+  
   return (
     <div className="container-fluid mt-4">
       <h2 className="mb-4">Admin Panel</h2>
@@ -31,8 +31,8 @@ function AdminPanel() {
         <Tab eventKey="device-health" title="Device Health">
           <DeviceHealth />
         </Tab>
-        <Tab eventKey="migration" title="Migration Tools">
-          <MigrationTools />
+        <Tab eventKey="migration" title="Database Tools">
+          <DatabaseTools />
         </Tab>
       </Tabs>
     </div>

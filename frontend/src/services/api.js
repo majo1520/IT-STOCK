@@ -2031,4 +2031,16 @@ export const getSystemInfo = () => {
   return api.get('/admin/system-info');
 };
 
+// Add a new method to update just EAN and QR codes
+
+/**
+ * Updates just the EAN and QR codes for an item
+ * @param {string|number} itemId - Item ID
+ * @param {object} codeData - Object containing ean_code, qr_code, and/or reference_id
+ * @returns {Promise} - Promise resolving to the API response
+ */
+export const updateItemCodes = (itemId, codeData) => {
+  return api.put(`/api/items/${itemId}/codes`, codeData);
+};
+
 export default api; 

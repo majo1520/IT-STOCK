@@ -1,0 +1,27 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="32" cy="32" r="30" fill="#0078d7"/>
+  
+  <!-- White Base - Slightly Larger -->
+  <circle cx="32" cy="32" r="26" fill="white"/>
+  
+  <!-- Hard Drive - Enlarged -->
+  <rect x="16" y="18" width="32" height="10" rx="2" fill="#0078d7"/>
+  <circle cx="43" cy="23" r="2.5" fill="#66B2FF"/>
+  <rect x="20" y="21" width="16" height="1.5" fill="#66B2FF"/>
+  <rect x="20" y="24.5" width="14" height="1.5" fill="#66B2FF"/>
+  
+  <!-- CPU - Enlarged -->
+  <rect x="20" y="32" width="24" height="24" rx="3" fill="#0078d7"/>
+  <rect x="24" y="36" width="16" height="16" rx="2" fill="white"/>
+  <rect x="27" y="39" width="10" height="10" rx="1.5" fill="#0078d7"/>
+  
+  <!-- Memory Stick - Larger -->
+  <rect x="48" y="30" width="6" height="20" rx="1.5" fill="#0078d7"/>
+  <rect x="48" y="30" width="6" height="5" fill="#66B2FF"/>
+  
+  <!-- Plus Sign - Larger -->
+  <circle cx="14" cy="42" r="7" fill="#0078d7"/>
+  <rect x="13" y="38" width="2" height="8" rx="1" fill="white"/>
+  <rect x="10" y="41" width="8" height="2" rx="1" fill="white"/>
+</svg> 

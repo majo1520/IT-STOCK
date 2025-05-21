@@ -101,7 +101,7 @@ function Dashboard() {
           </svg>
           <div>
             <small className="text-muted">OVERVIEW</small>
-            <h2 className="h5 mb-0">INVENTORY</h2>
+            <h2 className="h5 mb-0 text-dark">INVENTORY</h2>
           </div>
         </div>
         
@@ -186,7 +186,7 @@ function Dashboard() {
         <div className="col-md-6">
           <div className="card h-100">
             <div className="card-header d-flex justify-content-between align-items-center py-2">
-              <span className="small fw-bold d-flex align-items-center">
+              <span className="small fw-bold d-flex align-items-center text-dark">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" className="bi bi-boxes me-1 text-primary" viewBox="0 0 16 16">
                   <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504Z"/>
                 </svg>
@@ -244,7 +244,7 @@ function Dashboard() {
         <div className="col-md-6">
           <div className="card h-100">
             <div className="card-header d-flex justify-content-between align-items-center py-2">
-              <span className="small fw-bold d-flex align-items-center">
+              <span className="small fw-bold d-flex align-items-center text-dark">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" className="bi bi-collection me-1 text-primary" viewBox="0 0 16 16">
                   <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
                 </svg>

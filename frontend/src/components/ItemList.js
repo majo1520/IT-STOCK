@@ -3664,8 +3664,10 @@ function ItemList() {
           {/* Relationship Modal */}
           {showRelationshipModal && (
             <RelationshipModal
+              show={showRelationshipModal}
+              handleClose={closeRelationshipModal}
               item={selectedItemForRelationship}
-              onClose={closeRelationshipModal}
+              items={items}
               onSuccess={handleRelationshipSuccess}
             />
           )}

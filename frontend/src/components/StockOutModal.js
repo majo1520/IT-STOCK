@@ -904,8 +904,8 @@ function StockOutModal({ show, handleClose, onSuccess, preselectedItemId, presel
     <div className="modal d-block" tabIndex="-1" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
       <div className="modal-dialog modal-lg modal-dialog-scrollable modal-fullscreen-sm-down">
         <div className="modal-content">
-          <div className="modal-header bg-danger text-white">
-            <h5 className="modal-title d-flex align-items-center">
+          <div className="modal-header bg-danger">
+            <h5 className="modal-title d-flex align-items-center text-dark">
               <i className="bi bi-box-arrow-up-right me-2"></i>
               <span className="d-none d-sm-inline">Stock Out - </span>Remove Items
               {scannedBoxId && scannedBoxNumber && (
@@ -916,7 +916,7 @@ function StockOutModal({ show, handleClose, onSuccess, preselectedItemId, presel
             </h5>
             <button 
               type="button" 
-              className="btn-close btn-close-white" 
+              className="btn-close" 
               onClick={handleClose}
               disabled={submitting}
               aria-label="Close"

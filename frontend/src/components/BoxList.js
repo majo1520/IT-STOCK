@@ -396,7 +396,7 @@ function BoxList() {
         }}
       >
         <div className="card-header py-2 d-flex justify-content-between align-items-center">
-          <span className="fw-bold">Box #{box.box_number} Items</span>
+          <span className="fw-bold text-dark">BOX #{box.box_number} ITEMS</span>
           <button 
             className="btn btn-sm btn-close" 
             onClick={() => setPreviewBoxId(null)}
@@ -422,19 +422,19 @@ function BoxList() {
               <table className="table table-sm small">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Qty</th>
-                    <th>Serial/Notes</th>
+                    <th className="text-dark">Name</th>
+                    <th className="text-dark">Type</th>
+                    <th className="text-dark">Qty</th>
+                    <th className="text-dark">Serial/Notes</th>
                   </tr>
                 </thead>
                 <tbody>
                   {boxItems.map(item => (
                     <tr key={item.id}>
-                      <td>{item.name}</td>
-                      <td>{item.type || '-'}</td>
-                      <td>{item.quantity || 1}</td>
-                      <td className="text-truncate" style={{maxWidth: '100px'}}>{item.serial_number || item.notes || '-'}</td>
+                      <td className="text-dark fw-bold">{item.name}</td>
+                      <td className="text-dark">{item.type || '-'}</td>
+                      <td className="text-dark">{item.quantity || 1}</td>
+                      <td className="text-dark text-truncate" style={{maxWidth: '100px'}}>{item.serial_number || item.notes || '-'}</td>
                     </tr>
                   ))}
                 </tbody>

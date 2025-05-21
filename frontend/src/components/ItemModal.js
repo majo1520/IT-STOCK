@@ -5,6 +5,7 @@ import QRCodeLabel from './QRCodeLabel';
 import { useApi } from '../contexts/ApiServiceContext';
 import webSocketService from '../services/webSocketService';
 import { generateUniqueQRValue } from '../utils/qrCodeGenerator';
+import codeSyncService from '../services/codeSync';
 
 function ItemModal({ show, handleClose, itemId = null, boxId = null, onSuccess }) {
   const isEditMode = !!itemId;
@@ -249,6 +250,17 @@ function ItemModal({ show, handleClose, itemId = null, boxId = null, onSuccess }
       qr_code: qrValue,
       ean_code: qrValue // Ensure QR code is saved to EAN field
     });
+    
+    // If we're editing an existing item, sync the QR code to the database immediately
+    if (isEditMode && itemId) {
+      codeSyncService.storeItemCode(itemId, qrValue, qrValue)
+        .then(() => {
+          console.log('QR code successfully synced to database');
+        })
+        .catch(err => {
+          console.error('Failed to sync QR code to database:', err);
+        });
+    }
   };
 
   const handleSubmit = async (e) => {

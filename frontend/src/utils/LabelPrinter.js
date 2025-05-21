@@ -8,6 +8,7 @@ import BoxLabel from '../components/BoxLabel';
 import { QRCodeSVG } from 'qrcode.react';
 import { jsPDF } from 'jspdf';
 import QRCode from 'qrcode';
+import config from '../config/appConfig';
 
 /**
  * Generate QR code SVG string
@@ -75,8 +76,8 @@ export const generateLabelPDF = async (boxes, options = {}) => {
         // If textId doesn't have the BOX- prefix, use the formatted version, otherwise use as-is
         const refFormatted = textId.startsWith('BOX-') ? textId : `BOX-${box.box_number.toString().padStart(4, '0')}-${refCode}`;
         
-        // Generate QR code URL with box ID and reference_id for proper linking
-        const qrCodeUrl = `http://192.168.155.207:5173/boxes/${box.id}?ref=${textId}`;
+        // Generate QR code URL for box details - use the application base URL from config
+        const qrCodeUrl = `${config.appBaseUrl}/boxes/${box.id}?ref=${textId}`;
         const qrCodeSvg = generateQRCodeSVG(qrCodeUrl, 120);
         
         // Get current date for the label

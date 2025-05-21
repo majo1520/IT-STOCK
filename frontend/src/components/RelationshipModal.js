@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Alert, Spinner, Table } from 'react-bootstrap';
 import { updateItem, getItems } from '../services/api';
+import webSocketService from '../services/webSocketService';
 
 const RelationshipModal = ({ show, handleClose, item = {}, items = [], onSuccess }) => {
   const [loading, setLoading] = useState(false);
@@ -205,6 +206,13 @@ const RelationshipModal = ({ show, handleClose, item = {}, items = [], onSuccess
 
       await Promise.all(updatePromises);
       
+      // Force a refresh of the items list via WebSocket
+      webSocketService.send({
+        type: 'client_refresh_request',
+        tableType: 'items',
+        timestamp: new Date().toISOString()
+      });
+      
       // Force a refresh of the items list
       if (typeof onSuccess === 'function') {
         onSuccess();
@@ -248,82 +256,79 @@ const RelationshipModal = ({ show, handleClose, item = {}, items = [], onSuccess
               </svg>
             </div>
             <div>
-              <strong className="fs-5">{item?.name || 'Unknown Item'}</strong>
-              {item?.type && <span className="badge bg-info bg-opacity-25 text-dark rounded-pill px-2 ms-2">{item.type}</span>}
-              {item?.quantity > 0 && <span className="badge bg-success bg-opacity-10 text-success rounded-pill px-2 ms-2">Qty: {item.quantity}</span>}
+              <div className="fw-bold">{item.name}</div>
+              <div className="small text-muted">
+                {item.type && <span className="badge bg-secondary me-2">{item.type}</span>}
+                {item.box_number && <span>Box: #{item.box_number}</span>}
+              </div>
             </div>
           </div>
         </div>
-
+        
+        <hr />
+        
         <div className="mb-3">
-          <h6 className="mb-2 d-flex align-items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search text-primary me-2" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-            </svg>
-            Search Items to Add as Children
-          </h6>
-          <Form.Control
-            type="text"
-            placeholder="Type to search items by name, type, or description..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
+          <Form.Group controlId="itemSearch">
+            <Form.Label>Search Items to Add as Children</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Search by name, type, or description..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              disabled={loading}
+            />
+          </Form.Group>
         </div>
-
-        <div className="search-results">
-          <h6 className="d-flex align-items-center mb-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-list-check text-primary me-2" viewBox="0 0 16 16">
-              <path fillRule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L1.5 3.793l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L1.5 7.793l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
-            </svg>
-            Select Items to Add ({selectedChildIds.length} selected)
-          </h6>
+        
+        <div className="mb-3">
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <h6 className="mb-0">Select Items</h6>
+            <small className="text-muted">
+              {selectedChildIds.length} of {searchResults.length} selected
+            </small>
+          </div>
           
           {loading ? (
-            <div className="text-center my-4">
-              <Spinner animation="border" role="status" variant="primary">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
+            <div className="text-center py-4">
+              <Spinner animation="border" size="sm" className="me-2" />
+              <span>Loading items...</span>
             </div>
           ) : searchResults.length === 0 ? (
             <Alert variant="info">
-              No items found. Try a different search term or create new items to add as children.
+              No suitable items found. Items that are already in the hierarchy or would create circular references are excluded.
             </Alert>
           ) : (
-            <div className="table-responsive">
-              <Table hover className="border">
-                <thead className="bg-light">
+            <div className="table-responsive" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+              <Table hover size="sm" className="mb-0">
+                <thead className="table-light sticky-top">
                   <tr>
-                    <th width="50"></th>
-                    <th>Item Name</th>
+                    <th style={{ width: '50px' }}></th>
+                    <th>Name</th>
                     <th>Type</th>
-                    <th>Quantity</th>
+                    <th style={{ width: '80px' }}>Qty</th>
                     <th>Box</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {searchResults.map(searchItem => (
-                    <tr key={`search-item-${searchItem.id}`}
-                      className={selectedChildIds.includes(searchItem.id) ? 'table-active' : ''}
-                      onClick={() => toggleSelectChild(searchItem.id)}>
-                      <td>
+                  {searchResults.map(item => (
+                    <tr 
+                      key={item.id} 
+                      onClick={() => toggleSelectChild(item.id)}
+                      className={selectedChildIds.includes(Number(item.id)) ? 'table-primary' : ''}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <td className="text-center">
                         <Form.Check
                           type="checkbox"
-                          checked={selectedChildIds.includes(searchItem.id)}
-                          onChange={() => toggleSelectChild(searchItem.id)}
-                          onClick={(e) => e.stopPropagation()}
+                          checked={selectedChildIds.includes(Number(item.id))}
+                          onChange={() => {}} // Handled by row click
+                          onClick={e => e.stopPropagation()}
                         />
                       </td>
-                      <td>
-                        <div className="fw-medium">{searchItem.name}</div>
-                        {searchItem.description && (
-                          <small className="text-muted text-truncate d-inline-block" style={{ maxWidth: '200px' }}>
-                            {searchItem.description}
-                          </small>
-                        )}
-                      </td>
-                      <td>{searchItem.type || <span className="text-muted">-</span>}</td>
-                      <td>{safeGetQuantity(searchItem)}</td>
-                      <td>{searchItem.box_number || <span className="text-muted">-</span>}</td>
+                      <td>{item.name}</td>
+                      <td>{item.type || '-'}</td>
+                      <td className="text-center">{safeGetQuantity(item)}</td>
+                      <td>{item.box_number ? `#${item.box_number}` : '-'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -338,17 +343,11 @@ const RelationshipModal = ({ show, handleClose, item = {}, items = [], onSuccess
         </Button>
         <Button 
           variant="primary" 
-          onClick={handleSave} 
+          onClick={handleSave}
           disabled={loading || selectedChildIds.length === 0}
         >
-          {loading ? (
-            <>
-              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="me-2" />
-              Saving...
-            </>
-          ) : (
-            `Add ${selectedChildIds.length} Selected ${selectedChildIds.length === 1 ? 'Item' : 'Items'} as Children`
-          )}
+          {loading && <Spinner animation="border" size="sm" className="me-2" />}
+          Save Changes
         </Button>
       </Modal.Footer>
     </Modal>

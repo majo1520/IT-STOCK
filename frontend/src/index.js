@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+// Import Bootstrap JS properly to ensure dropdown functionality
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './styles/globalStyles.css'; // Import global styles with Roboto font and rounded corners
 import App from './App';
